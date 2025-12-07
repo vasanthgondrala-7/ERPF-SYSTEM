@@ -1,73 +1,102 @@
-# Welcome to your Lovable project
+## 🏗️ Construction ERP & Finance System with AI Insights
 
-## Project info
+### A Full-Stack Enterprise Solution for Next-Gen Construction Management
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+### 🌟 Project Overview & Value Proposition
 
-There are several ways of editing your application.
+This project is the design and development of a prototype **Mini ERP & Finance System** specifically tailored for the construction industry. It manages Users, Finances (General Ledger, Invoices), and provides logic-based **"AI" insights** to help managers identify risks in projects. It goes beyond standard accounting by integrating essential construction management features with these insights to proactively manage project risk and forecast liquidity.
 
-**Use Lovable**
+The core objective was to build a full-stack application demonstrating proficiency in:
+* Building robust **RESTful APIs** with Node.js & Express.
+* Designing complex **Relational Database Schemas (SQL)** for finance and project data.
+* Implementing secure **JWT Authentication**.
+* Translating advanced **business logic** (Financial Statements, Risk Algorithms) into code.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🧠 AI Insights & Risk Management Layer
 
-**Use your preferred IDE**
+A key differentiator of this system is the logic layer that provides predictive guidance to managers, based on business logic, not complex Machine Learning.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+| Insight | Calculation Basis | Example Logic |
+| :--- | :--- | :--- |
+| **Predictive Risk Score** | Calculated based on Delayed Invoices, Budget Overrun, and Project Progress Mismatch. | If `actual_spend > budget`, mark Risk as "High". Or, if budget used is 20% greater than progress, add a penalty. |
+| **Cash Flow Forecast** | Simple formula-based projection using the last 6 months of data to project the next month. | Used to generate the Cash Flow trend chart. |
+| **Project Progress Insights** | Compares planned versus actual progress to highlight deviations and return a project health status. | Fetches project data to inform the "Al" logic. |
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+### 🧱 Core Functional Modules
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+#### 1. ERP Core Module
+* **User Management & RBAC:** User registration/login with **JWT authentication** and defined roles (Admin, Finance Manager, Project Manager).
+* **System Administration:** APIs for managing Users, Audit logs, and mock Integrations.
+* **Dashboard API:** Supplies KPI data (projects, invoices, expenses, cash flow) and Alerts (delayed payments, project risks).
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+#### 2. Finance Module
+* **General Ledger (GL):** CRUD for Chart of Accounts, Journal Entries (Add, Approve), and Account Reconciliation.
+* **Financial Reporting:** Automated generation of Balance Sheet, P&L, and Cash Flow statements.
+* **AR/AP:** Invoice creation & payment tracking, Vendor management, and Customer management.
+* **Multi-Currency (Simplified):** Stores exchange rates and performs auto-conversion during invoice/payment processing.
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### 💻 Technical Architecture & Stack
 
-**Edit a file directly in GitHub**
+| Component | Technology | Rationale & Libraries |
+| :--- | :--- | :--- |
+| **Backend** | **Node.js (Express.js)** | Built robust REST APIs for all core modules, emphasizing clean architecture. |
+| **Database** | **SQL (PostgreSQL/MySQL)** | Designed a comprehensive Relational Schema covering `users`, `accounts`, `invoices`, `projects`, and `exchange_rates`. |
+| **Frontend** | **React.js** | Built a responsive and interactive UI for all required screens. |
+| **Data Handling** | Axios | Used for efficient API integration and data fetching (e.g., fetching dashboard data on load). |
+| **Visualization** | Chart.js / Recharts | Used to render dynamic data for Cash Flow Trends and Risk Scores. |
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+### ⚙️ Getting Started (Installation Guide)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Follow these steps to set up and run the system locally.
 
-## What technologies are used for this project?
+#### Prerequisites
 
-This project is built with:
+* A computer with at least 8GB RAM.
+* Code Editor (VS Code recommended).
+* Node.js (Version 16 or higher).
+* PostgreSQL or MySQL.
+* Git & GitHub account.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+#### Installation Steps
 
-## How can I deploy this project?
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/vasanthgondrala-7/ERPF-SYSTEM.git](https://github.com/vasanthgondrala-7/ERPF-SYSTEM.git)
+    cd ERPF-SYSTEM
+    ```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+2.  **Database Setup (Phase 1)**
+    * Install your chosen SQL database.
+    * Create the database named `construction_erp`.
+    * Write SQL scripts to create tables for **Users, Accounts, Projects, and Invoices**.
 
-## Can I connect a custom domain to my Lovable project?
+3.  **Backend Setup (Phase 2)**
+    * Navigate to the `/server` directory.
+    * Install dependencies: `npm install express pg cors dotenv jsonwebtoken bcryptjs`.
+    * Create and configure the **`.env`** file for database connection and secrets.
+    * Start the server: `node index.js`. (Server runs on port 5000).
 
-Yes, you can!
+4.  **Frontend Setup (Phase 3)**
+    * Navigate to the main folder and run: `npx create-vite client --template react`.
+    * Navigate to the `/client` directory.
+    * Install libraries: `npm install axios react-router-dom chart.js react-chartjs-2`.
+    * Start the client: `npm run dev`.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### 📂 Key Deliverables
+
+* **Frontend (React.js):** All required pages (Login, Dashboard, Finance, Admin) with charts and tables.
+* **Backend (Node.js):** Implementation of all Core, Finance, and AI APIs, secured by JWT authentication.
+* **SQL Database:** ER Diagram, necessary tables populated with sample data, and SQL models & migrations.
+* **Documentation:** API documentation, comprehensive setup guide, and feature explanation.
