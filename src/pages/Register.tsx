@@ -1,18 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Building2, Mail, Lock, Eye, EyeOff, ArrowRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,12 +14,18 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signUp, user, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,17 +41,46 @@ const Register = () => {
       return;
     }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (formData.password.length < 6) {
+      toast({
+        variant: "destructive",
+        title: "Password too short",
+        description: "Password must be at least 6 characters long.",
+      });
+      setIsLoading(false);
+      return;
+    }
 
-    toast({
-      title: "Account created!",
-      description: "Welcome to BuildERP. Redirecting to login...",
-    });
-    
-    setTimeout(() => navigate("/login"), 1500);
+    const { error } = await signUp(formData.email, formData.password, formData.name);
+
+    if (error) {
+      let errorMessage = error.message;
+      if (error.message.includes("already registered")) {
+        errorMessage = "This email is already registered. Please sign in instead.";
+      }
+      toast({
+        variant: "destructive",
+        title: "Registration failed",
+        description: errorMessage,
+      });
+    } else {
+      toast({
+        title: "Account created!",
+        description: "Welcome to BuildERP. You are now signed in.",
+      });
+      navigate("/dashboard");
+    }
+
     setIsLoading(false);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8">
@@ -110,23 +139,6 @@ const Register = () => {
                   required
                 />
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="role">Role</Label>
-              <Select
-                value={formData.role}
-                onValueChange={(value) => setFormData({ ...formData, role: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="admin">Admin</SelectItem>
-                  <SelectItem value="finance_manager">Finance Manager</SelectItem>
-                  <SelectItem value="project_manager">Project Manager</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
 
             <div className="space-y-2">
