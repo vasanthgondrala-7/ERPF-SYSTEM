@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "@/hooks/useAuth";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -23,25 +25,27 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/insights" element={<Insights />} />
-          <Route path="/invoices" element={<Invoices />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/audit" element={<AuditLogs />} />
-          <Route path="/ledger" element={<GeneralLedger />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/accounts" element={<Navigate to="/ledger" replace />} />
-          <Route path="/cashflow" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/vendors" element={<Navigate to="/invoices" replace />} />
-          <Route path="/customers" element={<Navigate to="/invoices" replace />} />
-          <Route path="/roles" element={<Navigate to="/users" replace />} />
-          <Route path="/settings" element={<Navigate to="/dashboard" replace />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/insights" element={<ProtectedRoute><Insights /></ProtectedRoute>} />
+            <Route path="/invoices" element={<ProtectedRoute><Invoices /></ProtectedRoute>} />
+            <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+            <Route path="/audit" element={<ProtectedRoute><AuditLogs /></ProtectedRoute>} />
+            <Route path="/ledger" element={<ProtectedRoute><GeneralLedger /></ProtectedRoute>} />
+            <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
+            <Route path="/accounts" element={<Navigate to="/ledger" replace />} />
+            <Route path="/cashflow" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/vendors" element={<Navigate to="/invoices" replace />} />
+            <Route path="/customers" element={<Navigate to="/invoices" replace />} />
+            <Route path="/roles" element={<Navigate to="/users" replace />} />
+            <Route path="/settings" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
