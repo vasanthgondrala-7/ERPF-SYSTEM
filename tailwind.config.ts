@@ -113,6 +113,7 @@ export default {
         "scale-in": "scale-in 0.2s ease-out",
         shimmer: "shimmer 2s linear infinite",
       },
+      
     },
   },
   plugins: [require("tailwindcss-animate")],
