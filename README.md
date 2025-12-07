@@ -12,7 +12,7 @@ The core objective was to build a full-stack application demonstrating proficien
 * Building robust **RESTful APIs** with Node.js & Express.
 * Designing complex **Relational Database Schemas (SQL)** for finance and project data.
 * Implementing secure **JWT Authentication**.
-* Translating advanced **business logic** (Financial Statements, Risk Algorithms) into code.
+* Translating advanced **business logic** (Financial Statements, Risk Algorithms) into code. 
 
 ---
 
